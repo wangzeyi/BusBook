@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.wang_.busbook.R;
+import com.example.wang_.busbook.seatselect.SeatSelectActivity;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ public class BusSeatAdapter extends RecyclerView.Adapter<BusSeatAdapter.MyViewHo
 
     List<BusSeat> seatlist;
     SeatOnClickListener listener;
-    int[] image_array = {R.drawable.seat_free, R.drawable.seat_reserved, R.drawable.seat_selected};
+    int[] image_array = {R.drawable.available_seat, R.drawable.unavailable_seat, R.drawable.selected_seat, R.drawable.aisle};
 
     public BusSeatAdapter(List<BusSeat> seatlist, SeatOnClickListener listener) {
         this.seatlist = seatlist;
@@ -35,8 +36,10 @@ public class BusSeatAdapter extends RecyclerView.Adapter<BusSeatAdapter.MyViewHo
         BusSeat busSeat = seatlist.get(position);
         int type = busSeat.getType();
         holder.imageView_seat.setImageResource(image_array[type]);
-        int num = busSeat.getSeatNum();
-        holder.textView_num.setText(""+num);
+        if( position% 5 !=2) {
+            int num = busSeat.getSeatNum();
+            holder.textView_num.setText("" + num);
+        }
         holder.bind(busSeat, listener);
 
     }

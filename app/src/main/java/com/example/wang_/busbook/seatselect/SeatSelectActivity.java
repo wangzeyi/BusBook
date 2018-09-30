@@ -17,7 +17,7 @@ public class SeatSelectActivity extends AppCompatActivity {
     RecyclerView recyclerView_seat;
     BusSeatAdapter myAdapter;
     List<BusSeat> myList;
-    int columns = 3;
+    static int columns = 5;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,11 +25,19 @@ public class SeatSelectActivity extends AppCompatActivity {
 
         recyclerView_seat = findViewById(R.id.recyclerview_seat);
         myList = new ArrayList<>();
-        //myAdapter = new BusSeatAdapter(myList);
 
-        for(int i=1; i<13; i++){
-            BusSeat busSeat = new BusSeat(0,i);
-            myList.add(busSeat);
+        int idx = 1;
+
+        for(int i=1; i<21; i++){
+            if(i%5!=3) {
+                BusSeat busSeat = new BusSeat(0, idx);
+                idx++;
+                myList.add(busSeat);
+            }
+            else {
+                BusSeat busSeat = new BusSeat(3, 0);
+                myList.add(busSeat);
+            }
         }
         myAdapter = new BusSeatAdapter(myList, new BusSeatAdapter.SeatOnClickListener() {
             @Override
