@@ -27,11 +27,22 @@ public class SeatSelectActivity extends AppCompatActivity {
         myList = new ArrayList<>();
         //myAdapter = new BusSeatAdapter(myList);
 
-        for(int i=0; i<12; i++){
-            BusSeat busSeat = new BusSeat(0);
+        for(int i=1; i<13; i++){
+            BusSeat busSeat = new BusSeat(0,i);
             myList.add(busSeat);
         }
-        myAdapter = new BusSeatAdapter(myList);
+        myAdapter = new BusSeatAdapter(myList, new BusSeatAdapter.SeatOnClickListener() {
+            @Override
+            public void onitemclick(BusSeat busSeat) {
+               if(busSeat.getType() == 0) {
+                   busSeat.setType(2);
+               }
+               else if(busSeat.getType() == 2){
+                   busSeat.setType(0);
+               }
+               myAdapter.notifyDataSetChanged();
+            }
+        });
 
         GridLayoutManager manager = new GridLayoutManager(this, columns);
         recyclerView_seat.setLayoutManager(manager);

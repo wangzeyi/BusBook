@@ -1,10 +1,12 @@
 package com.example.wang_.busbook.adapter;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.wang_.busbook.R;
 
@@ -13,10 +15,12 @@ import java.util.List;
 public class BusSeatAdapter extends RecyclerView.Adapter<BusSeatAdapter.MyViewHolder>{
 
     List<BusSeat> seatlist;
+    SeatOnClickListener listener;
     int[] image_array = {R.drawable.seat_free, R.drawable.seat_reserved, R.drawable.seat_selected};
 
-    public BusSeatAdapter(List<BusSeat> seatlist) {
+    public BusSeatAdapter(List<BusSeat> seatlist, SeatOnClickListener listener) {
         this.seatlist = seatlist;
+        this.listener = listener;
     }
 
     @Override
@@ -31,7 +35,9 @@ public class BusSeatAdapter extends RecyclerView.Adapter<BusSeatAdapter.MyViewHo
         BusSeat busSeat = seatlist.get(position);
         int type = busSeat.getType();
         holder.imageView_seat.setImageResource(image_array[type]);
-
+        int num = busSeat.getSeatNum();
+        holder.textView_num.setText(""+num);
+        holder.bind(busSeat, listener);
 
     }
 
@@ -44,10 +50,11 @@ public class BusSeatAdapter extends RecyclerView.Adapter<BusSeatAdapter.MyViewHo
     public class MyViewHolder extends RecyclerView.ViewHolder{
 
         ImageView imageView_seat;
-
+        TextView textView_num;
         public MyViewHolder(View itemView) {
             super(itemView);
             imageView_seat =itemView.findViewById(R.id.imageView_seat);
+            textView_num = itemView.findViewById(R.id.textView_seatnum);
         }
 
         public void bind(final BusSeat busSeat, final SeatOnClickListener listener){
